@@ -410,7 +410,8 @@ MonoBehaviour:
   _rig: {fileID: 405046684}
   _anim: {fileID: 405046682}
   _speed: 5
-  _JumpPower: 0
+  _JumpPower: 15
+  _increase: {fileID: 1657335183414996889, guid: 61987fd93775a794fa163fa825a6f8fc, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

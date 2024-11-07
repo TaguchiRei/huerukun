@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMove : Move
 {
     [HideInInspector] public static Move Instance = default;
     [SerializeField] GameObject _increase;
+    List<GameObject> _increaseList;
     //シングルトンパターン
     private void Awake()
     {
@@ -21,8 +23,14 @@ public class PlayerMove : Move
     {
         base.Update();
         if (Input.GetButtonDown("Fire1"))
+            _increaseList.Add(Instantiate(_increase, transform.position, Quaternion.identity));
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            Instantiate(_increase,transform.position,Quaternion.identity);
+            foreach (var item in _increaseList)
+            {
+                Destroy(item.gameObject);
+                _increaseList.Remove(item);
+            }
         }
     }
 }

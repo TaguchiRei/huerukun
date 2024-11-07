@@ -1,15 +1,14 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class Move : MonoBehaviour
 {
-    [SerializeField] GameObject[] _foot;
-    [SerializeField] Rigidbody2D _rig;
-    [SerializeField] Animator _anim;
-    [SerializeField] float _speed;
-    [SerializeField] float _JumpPower;
-    Vector2 movePower = Vector2.zero;
-    bool _canJump = true;
+    [SerializeField] protected GameObject[] _foot;
+    [SerializeField] protected Rigidbody2D _rig;
+    [SerializeField]  protected Animator _anim;
+    [SerializeField] protected float _speed;
+    [SerializeField] protected float _JumpPower;
+    protected Vector2 movePower = Vector2.zero;
+    protected bool _canJump = true;
 
     // Update is called once per frame
     public virtual void Update()
@@ -29,13 +28,13 @@ public abstract class Move : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         _rig.linearVelocity = movePower;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             _canJump = true;
         }
