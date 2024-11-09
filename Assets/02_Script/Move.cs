@@ -4,7 +4,7 @@ public abstract class Move : MonoBehaviour
 {
     [SerializeField] protected GameObject[] _foot;
     [SerializeField] protected Rigidbody2D _rig;
-    [SerializeField]  protected Animator _anim;
+    [SerializeField] protected Animator _anim;
     [SerializeField] protected float _speed;
     [SerializeField] protected float _JumpPower;
     protected Vector2 movePower = Vector2.zero;
@@ -13,9 +13,9 @@ public abstract class Move : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-        if(Input.GetAxisRaw("Horizontal") != 0)
+        if (Input.GetAxisRaw("Horizontal") != 0)
         {
-            _anim.SetBool("Move",true);
+            _anim.SetBool("Move", true);
         }
         else
         {
@@ -24,7 +24,8 @@ public abstract class Move : MonoBehaviour
         movePower = new Vector2(Input.GetAxisRaw("Horizontal") * _speed, _rig.linearVelocity.y);
         if (Input.GetButtonDown("Jump") && _canJump)
         {
-            _rig.AddForce(new Vector2(0,_JumpPower) , ForceMode2D.Impulse);
+            _rig.AddForce(new Vector2(0, _JumpPower), ForceMode2D.Impulse);
+            _canJump = false;
         }
     }
 
@@ -32,11 +33,8 @@ public abstract class Move : MonoBehaviour
     {
         _rig.linearVelocity = movePower;
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            _canJump = true;
-        }
+        _canJump = true;
     }
 }

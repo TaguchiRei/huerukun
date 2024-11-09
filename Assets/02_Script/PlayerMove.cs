@@ -5,7 +5,7 @@ public class PlayerMove : Move
 {
     [HideInInspector] public static Move Instance = default;
     [SerializeField] GameObject _increase;
-    List<GameObject> _increaseList;
+    List<GameObject> _increaseList = new();
     //シングルトンパターン
     private void Awake()
     {
@@ -23,14 +23,18 @@ public class PlayerMove : Move
     {
         base.Update();
         if (Input.GetButtonDown("Fire1"))
-            _increaseList.Add(Instantiate(_increase, transform.position, Quaternion.identity));
+        {
+            var inc = Instantiate(_increase, transform.position, Quaternion.identity);
+            _increaseList.Add(inc);
+        }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            foreach (var item in _increaseList)
+            var n = _increaseList.Count;
+            for (int i = 0; i < n; i++)
             {
-                Destroy(item.gameObject);
-                _increaseList.Remove(item);
+                Destroy(_increaseList[i]);
             }
+            _increaseList.Clear();
         }
     }
 }
